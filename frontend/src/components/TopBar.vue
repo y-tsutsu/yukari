@@ -23,7 +23,7 @@ export default {
   name: 'TopBar',
   data () {
     return {
-      activeIndex: 'home'
+      activeIndex: this.$route.name
     }
   }
 }
