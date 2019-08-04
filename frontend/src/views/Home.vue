@@ -2,7 +2,7 @@
   <div class="home">
     <el-image
       class="main-image"
-      src="http://news.denfaminicogamer.jp/wp-content/uploads/2017/03/yu3.jpg"
+      src="/static/img/yuyushiki.jpg"
       fit="fill"
     ></el-image>
     <el-table class="data-table" :data="tableData" stripe>
