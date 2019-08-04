@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <TopBar class="top-bar"></TopBar>
     <el-image
       class="main-image"
       src="http://news.denfaminicogamer.jp/wp-content/uploads/2017/03/yu3.jpg"
@@ -15,13 +14,8 @@
 </template>
 
 <script>
-import TopBar from '@/components/TopBar.vue'
-
 export default {
   name: 'home',
-  components: {
-    TopBar
-  },
   data () {
     return {
       tableData: [
@@ -47,9 +41,6 @@ export default {
 </script>
 
 <style scoped>
-.top-bar {
-  margin-bottom: 30px
-}
 .main-image {
   margin-bottom: 30px
 }
