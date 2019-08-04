@@ -14,17 +14,27 @@
 </template>
 
 <script>
-const axios = require('axios');
+const axios = require('axios')
 
 export default {
   name: 'home',
   data () {
     return {
-      tableData: []
+      tableData: [],
+      timer: null
     }
   },
   mounted () {
-    axios.get('/api/infos').then(response => (this.tableData = response.data))
+    this.updataTableData()
+    this.timer = setInterval(this.updataTableData, 1000)
+  },
+  destroyed () {
+    clearInterval(this.timer)
+  },
+  methods: {
+    updataTableData: function () {
+      axios.get('/api/infos').then(response => (this.tableData = response.data))
+    }
   }
 }
 </script>
