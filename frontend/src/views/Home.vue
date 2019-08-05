@@ -1,10 +1,6 @@
 <template>
   <div class="home">
-    <el-image
-      class="main-image"
-      src="/static/img/yuyushiki.jpg"
-      fit="fill"
-    ></el-image>
+    <el-image class="main-image" src="/static/img/yuyushiki.jpg" fit="fill"></el-image>
     <el-table class="data-table" :data="tableData" stripe>
       <el-table-column prop="name" label="キャラクタ" width="180"></el-table-column>
       <el-table-column prop="cv" label="声優" width="180"></el-table-column>
@@ -14,7 +10,7 @@
 </template>
 
 <script>
-const axios = require('axios')
+const axios = require('axios').create({ baseURL: 'http://127.0.0.1:5000' })
 
 export default {
   name: 'home',
