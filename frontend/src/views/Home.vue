@@ -28,8 +28,9 @@ export default {
     clearInterval(this.timer)
   },
   methods: {
-    updataTableData: function () {
-      axios.get('/api/infos').then(response => (this.tableData = response.data))
+    updataTableData: async function () {
+      const response = await axios.get('/api/infos')
+      this.tableData = response.data
     }
   }
 }
