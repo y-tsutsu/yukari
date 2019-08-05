@@ -11,7 +11,6 @@ flake8 = "*"
 [packages]
 flask = "*"
 flask-restful = "*"
-flask-cors = "*"
 
 [requires]
 python_version = "3.7"

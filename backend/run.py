@@ -1,11 +1,9 @@
 from flask import Flask, render_template
-from flask_cors import CORS
 
 from api import api_bp
 
 app = Flask(__name__, static_folder='../frontend/dist/static', template_folder='../frontend/dist')
 app.register_blueprint(api_bp)
-cors = CORS(app, resources={r"/api/*": {"origins": "*"}})   # Access-Control-Allow-Origin
 
 
 @app.route('/', defaults={'path': ''})
@@ -15,7 +13,7 @@ def catch_all(path):
 
 
 def main():
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=80)
 
 
 if __name__ == "__main__":
