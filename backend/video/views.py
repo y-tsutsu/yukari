@@ -4,7 +4,7 @@ from flask import Blueprint, Response
 
 from .camera import JpgCamera, Mp4Camera
 
-camera_bp = Blueprint('camera', __name__, url_prefix='/camera')
+video_bp = Blueprint('video', __name__, url_prefix='/video')
 
 
 def gen(camera):
@@ -15,13 +15,13 @@ def gen(camera):
         sleep(0.033)
 
 
-@camera_bp.route('/')
+@video_bp.route('/')
 def video_feed():
     from yukari import config
 
     if config['MP4_CAMERA']:
-        camera = Mp4Camera('./camera/sample/sample.mp4')
+        camera = Mp4Camera('./video/sample/sample.mp4')
     else:
-        camera = JpgCamera([f'./camera/sample/sample{i:02}.jpg' for i in range(1, 4)])
+        camera = JpgCamera([f'./video/sample/sample{i:02}.jpg' for i in range(1, 4)])
 
     return Response(gen(camera), mimetype='multipart/x-mixed-replace; boundary=frame')

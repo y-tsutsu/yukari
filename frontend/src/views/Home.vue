@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <el-image v-if="usedSampleImage" class="main-image" src="/static/img/yuyushiki.jpg" fit="fill"></el-image>
-    <el-image v-else class="main-image" src="/camera" fit="fill"></el-image>
+    <el-image v-else class="main-image" src="/video" fit="fill"></el-image>
 
     <el-table class="data-table" :data="tableData" stripe>
       <el-table-column prop="name" label="キャラクタ" width="180"></el-table-column>
