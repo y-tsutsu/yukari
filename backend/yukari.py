@@ -1,9 +1,15 @@
 from flask import Flask, render_template
 
 from api.api import api_bp
+from camera.camera import camera_bp
+from config import BaseConfig
 
 app = Flask(__name__, static_folder='../frontend/dist/static', template_folder='../frontend/dist')
 app.register_blueprint(api_bp)
+app.register_blueprint(camera_bp)
+app.config.from_object(BaseConfig)
+
+config = app.config
 
 
 @app.route('/', defaults={'path': ''})

@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <el-image class="main-image" src="/static/img/yuyushiki.jpg" fit="fill"></el-image>
+    <el-image v-if="usedSampleImage" class="main-image" src="/static/img/yuyushiki.jpg" fit="fill"></el-image>
+    <el-image v-else class="main-image" src="/camera" fit="fill"></el-image>
+
     <el-table class="data-table" :data="tableData" stripe>
       <el-table-column prop="name" label="キャラクタ" width="180"></el-table-column>
       <el-table-column prop="cv" label="声優" width="180"></el-table-column>
@@ -35,6 +37,11 @@ export default {
       const response = await axios.get('/api/infos')
       this.tableData = response.data
     }
+  },
+  computed: {
+    usedSampleImage () {
+      return process.env.VUE_APP_SAMPLE_IMAGE
+    }
   }
 }
 </script>
@@ -42,6 +49,7 @@ export default {
 <style scoped>
 .main-image {
   margin-bottom: 30px;
+  width: 45%;
 }
 .data-table {
   width: 60%;

@@ -11,9 +11,12 @@ flake8 = "*"
 [packages]
 flask = "*"
 flask-restful = "*"
+opencv-python = "*"
 
 [requires]
 python_version = "3.7"
 
 [scripts]
-start = "python run.py"
+start = "python yukari.py"
+format = "autopep8 -ivr ."
+lint = "flake8 --show-source ."
