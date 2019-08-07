@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 
 from api.api import api_bp
-from camera.camera import camera_bp
+from camera.views import camera_bp
 from config import BaseConfig
 
 app = Flask(__name__, static_folder='../frontend/dist/static', template_folder='../frontend/dist')
