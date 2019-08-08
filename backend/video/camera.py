@@ -22,10 +22,20 @@ class Mp4Camera(BaseCamera):
     def __init__(self, filename):
         self.__video = cv2.VideoCapture(filename)
 
-    def get_frame(self):
+    def __inner_get_frame(self):
         ret, frame = self.__video.read()
-        ret, encimg = cv2.imencode('.jpg', frame)
-        return encimg.tostring()
+        if ret:
+            ret, encimg = cv2.imencode('.jpg', frame)
+            return encimg.tostring()
+        else:
+            return b''
+
+    def get_frame(self):
+        frame = self.__inner_get_frame()
+        if not frame:
+            self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            frame = self.__inner_get_frame()
+        return frame
 
 
 class RtspCamera(Mp4Camera):
