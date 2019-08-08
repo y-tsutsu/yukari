@@ -7,6 +7,7 @@
       <el-table-column prop="name" label="キャラクタ" width="180"></el-table-column>
       <el-table-column prop="cv" label="声優" width="180"></el-table-column>
       <el-table-column prop="note" label="性格"></el-table-column>
+      <el-table-column prop="pos" label="位置" width="120"></el-table-column>
     </el-table>
   </div>
 </template>

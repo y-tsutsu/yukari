@@ -38,6 +38,11 @@ def init_db(app):
             update_positon(i + 1, 0, 0, 0, 0)
 
 
+def get_characters_all():
+    characters = Character.query.order_by(Character.id).all()
+    return [{'name': x.name, 'cv': x.cv, 'note': x.note, 'x': x.x, 'y': x.y, 'width': x.width, 'height': x.height} for x in characters]
+
+
 def update_positon(id, x, y, width, height):
     character = Character.query.filter(Character.id == id).first()
     character.x = x
