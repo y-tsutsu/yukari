@@ -2,7 +2,7 @@ from flask import Flask, render_template
 
 from api.api import api_bp
 from config import BaseConfig
-from video.views import video_bp
+from videos.views import video_bp
 
 app = Flask(__name__, static_folder='../frontend/dist/static', template_folder='../frontend/dist')
 app.register_blueprint(api_bp)

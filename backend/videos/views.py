@@ -23,8 +23,8 @@ def video_feed():
     if config['RTSP_CAMERA']:
         camera = RtspCamera('rtsp://user:pass@192.168.0.100/live1.sdp')
     elif config['MP4_CAMERA']:
-        camera = Mp4Camera('./video/sample/sample.mp4')
+        camera = Mp4Camera('./videos/sample/sample.mp4')
     else:
-        camera = JpgCamera([f'./video/sample/sample{i:02}.jpg' for i in range(1, 4)])
+        camera = JpgCamera([f'./videos/sample/sample{i:02}.jpg' for i in range(1, 4)])
 
     return Response(gen(camera), mimetype='multipart/x-mixed-replace; boundary=frame')
