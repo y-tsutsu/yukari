@@ -12,6 +12,7 @@ flake8 = "*"
 flask = "*"
 flask-restful = "*"
 opencv-python = "*"
+flask-sqlalchemy = "*"
 
 [requires]
 python_version = "3.7"
