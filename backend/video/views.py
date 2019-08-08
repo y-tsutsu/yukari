@@ -2,7 +2,7 @@ from time import sleep
 
 from flask import Blueprint, Response
 
-from .camera import JpgCamera, Mp4Camera
+from .camera import JpgCamera, Mp4Camera, RtspCamera
 
 video_bp = Blueprint('video', __name__, url_prefix='/video')
 
@@ -19,7 +19,9 @@ def gen(camera):
 def video_feed():
     from yukari import config
 
-    if config['MP4_CAMERA']:
+    if config['RTSP_CAMERA']:
+        camera = RtspCamera('rtsp://user:pass@192.168.0.100/live1.sdp')
+    elif config['MP4_CAMERA']:
         camera = Mp4Camera('./video/sample/sample.mp4')
     else:
         camera = JpgCamera([f'./video/sample/sample{i:02}.jpg' for i in range(1, 4)])

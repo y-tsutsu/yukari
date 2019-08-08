@@ -26,3 +26,8 @@ class Mp4Camera(BaseCamera):
         ret, frame = self.__video.read()
         ret, encimg = cv2.imencode('.jpg', frame)
         return encimg.tostring()
+
+
+class RtspCamera(Mp4Camera):
+    def __init__(self, url):
+        super(RtspCamera, self).__init__(url)
