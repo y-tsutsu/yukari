@@ -5,13 +5,21 @@ import cv2
 
 
 class BaseCamera(metaclass=ABCMeta):
+    def __init__(self, img_proc):
+        self._img_proc = img_proc
+
+    def _execute_img_proc(self, image):
+        if self._img_proc:
+            self._img_proc.execute(image)
+
     @abstractmethod
     def get_frame(self):
         pass
 
 
 class JpgCamera(BaseCamera):
-    def __init__(self, files):
+    def __init__(self, files, img_proc=None):
+        super(JpgCamera, self).__init__(img_proc)
         self.__frames = [open(file, 'rb').read() for file in files]
 
     def get_frame(self):
@@ -19,12 +27,14 @@ class JpgCamera(BaseCamera):
 
 
 class Mp4Camera(BaseCamera):
-    def __init__(self, filename):
+    def __init__(self, filename, img_proc=None):
+        super(Mp4Camera, self).__init__(img_proc)
         self.__video = cv2.VideoCapture(filename)
 
     def __inner_get_frame(self):
         ret, frame = self.__video.read()
         if ret:
+            self._execute_img_proc(frame)
             ret, encimg = cv2.imencode('.jpg', frame)
             return encimg.tostring()
         else:
@@ -39,5 +49,5 @@ class Mp4Camera(BaseCamera):
 
 
 class RtspCamera(Mp4Camera):
-    def __init__(self, url):
-        super(RtspCamera, self).__init__(url)
+    def __init__(self, url, img_proc=None):
+        super(RtspCamera, self).__init__(url, img_proc)

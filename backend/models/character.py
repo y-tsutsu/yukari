@@ -39,14 +39,18 @@ def init_db(app):
 
 
 def get_characters_all():
-    characters = Character.query.order_by(Character.id).all()
-    return [{'name': x.name, 'cv': x.cv, 'note': x.note, 'x': x.x, 'y': x.y, 'width': x.width, 'height': x.height} for x in characters]
+    from yukari import app
+    with app.app_context():
+        characters = Character.query.order_by(Character.id).all()
+        return [{'name': x.name, 'cv': x.cv, 'note': x.note, 'x': x.x, 'y': x.y, 'width': x.width, 'height': x.height} for x in characters]
 
 
 def update_positon(id, x, y, width, height):
-    character = Character.query.filter(Character.id == id).first()
-    character.x = x
-    character.y = y
-    character.width = width
-    character.height = height
-    db.session.commit()
+    from yukari import app
+    with app.app_context():
+        character = Character.query.filter(Character.id == id).first()
+        character.x = x
+        character.y = y
+        character.width = width
+        character.height = height
+        db.session.commit()

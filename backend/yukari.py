@@ -18,12 +18,12 @@ config = app.config
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    return render_template("index.html")
+    return render_template('index.html')
 
 
 def main():
     app.run(debug=True, host='0.0.0.0', port=80)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

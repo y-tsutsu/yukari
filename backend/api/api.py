@@ -1,9 +1,9 @@
 from flask import Blueprint, abort
 from flask_restful import Api, Resource
 
-from character import get_characters_all
+from models.character import get_characters_all
 
-api_bp = Blueprint('api', __name__, url_prefix="/api")
+api_bp = Blueprint('api', __name__, url_prefix='/api')
 api = Api(api_bp)
 
 
