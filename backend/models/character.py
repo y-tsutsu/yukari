@@ -34,8 +34,7 @@ def init_db(app):
             db.session.add_all([yuzuko, yukari, yui])
             db.session.commit()
 
-        for i in range(len(characters)):
-            update_positon(i + 1, 0, 0, 0, 0)
+        update_positons([(i + 1, 0, 0, 0, 0) for i in range(len(characters))])
 
 
 def get_characters_all():
@@ -45,12 +44,13 @@ def get_characters_all():
         return [{'name': x.name, 'cv': x.cv, 'note': x.note, 'x': x.x, 'y': x.y, 'width': x.width, 'height': x.height} for x in characters]
 
 
-def update_positon(id, x, y, width, height):
+def update_positons(rows):
     from yukari import app
     with app.app_context():
-        character = Character.query.filter(Character.id == id).first()
-        character.x = x
-        character.y = y
-        character.width = width
-        character.height = height
+        for id, x, y, width, height in rows:
+            character = Character.query.filter(Character.id == id).first()
+            character.x = x
+            character.y = y
+            character.width = width
+            character.height = height
         db.session.commit()
