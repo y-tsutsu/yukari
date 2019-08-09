@@ -28,7 +28,7 @@ export default {
   },
   mounted () {
     this.updataTableData()
-    this.timer = setInterval(this.updataTableData, 1000)
+    this.timer = setInterval(this.updataTableData, 500)
   },
   destroyed () {
     clearInterval(this.timer)
