@@ -1,4 +1,4 @@
-from time import sleep
+from time import sleep, time
 
 from flask import Blueprint, Response
 
@@ -12,10 +12,14 @@ video_bp = Blueprint('video', __name__, url_prefix='/video')
 def gen(camera):
     from yukari import config
     while True:
+        s = time()
         frame = camera.get_frame()
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
-        sleep(config['VIDEO_INTERVAL'])
+        e = time()
+        interval = config['VIDEO_INTERVAL'] - (e - s)
+        if 0 < interval:
+            sleep(interval)
 
 
 @video_bp.route('/')
