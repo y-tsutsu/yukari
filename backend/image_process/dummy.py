@@ -1,14 +1,8 @@
-from abc import ABCMeta, abstractmethod
-
 import cv2
 
 from models.character import CharacterTable
 
-
-class BaseImageProcess(metaclass=ABCMeta):
-    @abstractmethod
-    def execute(self, image):
-        pass
+from .base import BaseImageProcess
 
 
 class DummyProcess(BaseImageProcess):
