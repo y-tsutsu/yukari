@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 
 import cv2
 
-from models.character import update_positons
+from models.character import CharacterTable
 
 
 class BaseImageProcess(metaclass=ABCMeta):
@@ -12,21 +12,23 @@ class BaseImageProcess(metaclass=ABCMeta):
 
 
 class DummyProcess(BaseImageProcess):
-    def __init__(self):
-        self.__count = 0
+    def __init__(self, interval):
+        self.__db_update_count = 0
+        self.__move_count = 0
+        self.DB_UPDATE_INTERVAL_COUNT = int(0.5 / interval * (2 / 3))
 
     def execute(self, image):
         height, width, _ = image.shape
         rows = []
 
-        x = self.__count
-        y = self.__count * height // width
+        x = self.__move_count
+        y = self.__move_count * height // width
         w = width // 5
         h = height // 5
         cv2.rectangle(image, (x, y), (x + w, y + h), color=(122, 64, 236), thickness=2)
         rows.append((1, x, y, w, h))
 
-        x = (width - w) - self.__count
+        x = (width - w) - self.__move_count
         cv2.rectangle(image, (x, y), (x + w, y + h), color=(194, 87, 126), thickness=2)
         rows.append((2, x, y, w, h))
 
@@ -34,9 +36,13 @@ class DummyProcess(BaseImageProcess):
         cv2.rectangle(image, (x, y), (x + w, y + h), color=(88, 238, 255), thickness=2)
         rows.append((3, x, y, w, h))
 
-        update_positons(rows)
+        if self.DB_UPDATE_INTERVAL_COUNT <= self.__db_update_count:
+            CharacterTable.update_positons(rows)
+            self.__db_update_count = 0
+        else:
+            self.__db_update_count += 1
 
         if height < y + h:
-            self.__count = 0
+            self.__move_count = 0
         else:
-            self.__count += 1
+            self.__move_count += 1
