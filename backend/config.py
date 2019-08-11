@@ -3,7 +3,8 @@ class BaseConfig:
     MP4_CAMERA = True
     JPG_CAMERA = False
 
-    DUMMY_IMG_PROC = True
+    ANIME_FACE_IMG_PROC = True
+    DUMMY_IMG_PROC = False
 
     VIDEO_INTERVAL = 0.033
     RTSP_URL = 'rtsp://user:pass@192.168.0.100/live1.sdp'
