@@ -2,6 +2,7 @@ from abc import ABCMeta, abstractmethod
 from time import time
 
 import cv2
+import numpy as np
 
 
 class BaseCamera(metaclass=ABCMeta):
@@ -20,10 +21,13 @@ class BaseCamera(metaclass=ABCMeta):
 class JpgCamera(BaseCamera):
     def __init__(self, files, img_proc=None):
         super(JpgCamera, self).__init__(img_proc)
-        self.__frames = [open(file, 'rb').read() for file in files]
+        self.__frames = [cv2.imread(file, cv2.IMREAD_UNCHANGED) for file in files]
 
     def get_frame(self):
-        return self.__frames[int(time()) % 3]
+        jpg = np.copy(self.__frames[int(time()) % 3])
+        self._execute_img_proc(jpg)
+        ret, encimg = cv2.imencode('.jpg', jpg)
+        return encimg.tostring()
 
 
 class Mp4Camera(BaseCamera):
