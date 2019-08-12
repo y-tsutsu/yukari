@@ -11,7 +11,8 @@ class BaseCamera(metaclass=ABCMeta):
 
     def _execute_img_proc(self, image):
         if self._img_proc:
-            self._img_proc.execute(image)
+            image = self._img_proc.execute(image)
+        return image
 
     @abstractmethod
     def get_frame(self):
@@ -25,7 +26,7 @@ class JpgCamera(BaseCamera):
 
     def get_frame(self):
         jpg = np.copy(self.__frames[int(time()) % 3])
-        self._execute_img_proc(jpg)
+        jpg = self._execute_img_proc(jpg)
         ret, encimg = cv2.imencode('.jpg', jpg)
         return encimg.tostring()
 
@@ -38,7 +39,7 @@ class Mp4Camera(BaseCamera):
     def __inner_get_frame(self):
         ret, frame = self.__video.read()
         if ret:
-            self._execute_img_proc(frame)
+            frame = self._execute_img_proc(frame)
             ret, encimg = cv2.imencode('.jpg', frame)
             return encimg.tostring()
         else:
@@ -55,3 +56,8 @@ class Mp4Camera(BaseCamera):
 class RtspCamera(Mp4Camera):
     def __init__(self, url, img_proc=None):
         super(RtspCamera, self).__init__(url, img_proc)
+
+
+class WebCamera(Mp4Camera):
+    def __init__(self, cam_id, img_proc=None):
+        super(WebCamera, self).__init__(cam_id, img_proc)

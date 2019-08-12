@@ -8,7 +8,7 @@ from .base import BaseImageProcess
 
 
 class AnimeFaceProcess(BaseImageProcess):
-    def __init__(self, interval):
+    def __init__(self):
         xml_name = join(dirname(__file__), 'lbpcascade_animeface.xml')
         self.__classifier = cv2.CascadeClassifier(xml_name)
         self.__dummy_row = [(i, 0, 0, 0, 0) for i in range(1, 4)]
@@ -26,3 +26,5 @@ class AnimeFaceProcess(BaseImageProcess):
 
         rows += self.__dummy_row[len(rows):]
         CharacterTable.update_positons(rows[:3])
+
+        return image

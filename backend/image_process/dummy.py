@@ -40,3 +40,5 @@ class DummyProcess(BaseImageProcess):
             self.__move_count = 0
         else:
             self.__move_count += 1
+
+        return image
