@@ -21,7 +21,7 @@ class BaseCamera(metaclass=ABCMeta):
 
 class JpgCamera(BaseCamera):
     def __init__(self, files, img_proc=None):
-        super(JpgCamera, self).__init__(img_proc)
+        super().__init__(img_proc)
         self.__frames = [cv2.imread(file, cv2.IMREAD_UNCHANGED) for file in files]
 
     def get_frame(self):
@@ -31,33 +31,37 @@ class JpgCamera(BaseCamera):
         return encimg.tostring()
 
 
-class Mp4Camera(BaseCamera):
+class VideoCaptureCamera(BaseCamera):
     def __init__(self, filename, img_proc=None):
-        super(Mp4Camera, self).__init__(img_proc)
+        super().__init__(img_proc)
         self.__video = cv2.VideoCapture(filename)
 
     def __inner_get_frame(self):
         ret, frame = self.__video.read()
-        if ret:
-            frame = self._execute_img_proc(frame)
-            ret, encimg = cv2.imencode('.jpg', frame)
-            return encimg.tostring()
-        else:
-            return b''
+        if not ret:
+            self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            ret, frame = self.__video.read()
+        return ret, frame if ret else b''
 
     def get_frame(self):
-        frame = self.__inner_get_frame()
-        if not frame:
-            self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            frame = self.__inner_get_frame()
-        return frame
+        ret, frame = self.__inner_get_frame()
+        if not ret:
+            return frame
+        frame = self._execute_img_proc(frame)
+        ret, encimg = cv2.imencode('.jpg', frame)
+        return encimg.tostring()
 
 
-class RtspCamera(Mp4Camera):
+class Mp4Camera(VideoCaptureCamera):
+    def __init__(self, filename, img_proc=None):
+        super().__init__(filename, img_proc)
+
+
+class RtspCamera(VideoCaptureCamera):
     def __init__(self, url, img_proc=None):
-        super(RtspCamera, self).__init__(url, img_proc)
+        super().__init__(url, img_proc)
 
 
-class WebCamera(Mp4Camera):
+class WebCamera(VideoCaptureCamera):
     def __init__(self, cam_id, img_proc=None):
-        super(WebCamera, self).__init__(cam_id, img_proc)
+        super().__init__(cam_id, img_proc)

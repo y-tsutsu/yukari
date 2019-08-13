@@ -2,3 +2,4 @@
 *.mp4
 yukari.db
 lbpcascade_animeface.xml
+haarcascade_frontalface_default.xml

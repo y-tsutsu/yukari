@@ -7,9 +7,9 @@ from models.character import CharacterTable
 from .base import BaseImageProcess
 
 
-class AnimeFaceProcess(BaseImageProcess):
-    def __init__(self):
-        xml_name = join(dirname(__file__), 'lbpcascade_animeface.xml')
+class FacialRecognition(BaseImageProcess):
+    def __init__(self, filename):
+        xml_name = join(dirname(__file__), filename)
         self.__classifier = cv2.CascadeClassifier(xml_name)
         self.__dummy_row = [(i, 0, 0, 0, 0) for i in range(1, 4)]
 
@@ -28,3 +28,13 @@ class AnimeFaceProcess(BaseImageProcess):
         CharacterTable.update_positons(rows[:3])
 
         return image
+
+
+class RealFaceRecognition(FacialRecognition):
+    def __init__(self):
+        super().__init__('haarcascade_frontalface_default.xml')
+
+
+class AnimeFaceRecognition(FacialRecognition):
+    def __init__(self):
+        super().__init__('lbpcascade_animeface.xml')
