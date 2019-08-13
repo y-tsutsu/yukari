@@ -2,7 +2,7 @@ from time import sleep, time
 
 from flask import Blueprint, Response, current_app
 
-from image_process.factory import create_image_process
+from image_process.factory import create_image_processes
 
 from .factory import create_camera
 
@@ -27,7 +27,7 @@ def video_feed():
     config = current_app.config
     interval = config['VIDEO_INTERVAL']
 
-    img_proc = create_image_process(config)
-    camera = create_camera(config, img_proc)
+    img_proc_list = create_image_processes(config)
+    camera = create_camera(config, img_proc_list)
 
     return Response(gen(camera, interval), mimetype='multipart/x-mixed-replace; boundary=frame')

@@ -1,12 +1,12 @@
 from .camera import JpgCamera, Mp4Camera, RtspCamera, WebCamera
 
 
-def create_camera(config, img_proc):
+def create_camera(config, img_proc_list):
     if config['RTSP_CAMERA']:
-        return RtspCamera(config['RTSP_URL'], img_proc)
+        return RtspCamera(config['RTSP_URL'], img_proc_list)
     elif config['WEB_CAMERA']:
-        return WebCamera(config['WEB_CAM_ID'], img_proc)
+        return WebCamera(config['WEB_CAM_ID'], img_proc_list)
     elif config['MP4_CAMERA']:
-        return Mp4Camera(config['MP4_FILE'], img_proc)
+        return Mp4Camera(config['MP4_FILE'], img_proc_list)
     else:
-        return JpgCamera([f'./videos/sample/sample{i:02}.jpg' for i in range(1, 4)], img_proc)
+        return JpgCamera([f'./videos/sample/sample{i:02}.jpg' for i in range(1, 4)], img_proc_list)

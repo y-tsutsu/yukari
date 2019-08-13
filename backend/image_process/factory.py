@@ -3,15 +3,17 @@ from image_process.facial import AnimeFaceRecognition, RealFaceRecognition
 from image_process.trimming import TrimmingProcess
 
 
-def create_image_process(config):
-    interval = config['VIDEO_INTERVAL']
+def create_image_processes(config):
+    processes = []
     if config['REAL_FACE_IMG_PROC']:
-        return RealFaceRecognition()
+        processes.append(RealFaceRecognition())
     if config['ANIME_FACE_IMG_PROC']:
-        return AnimeFaceRecognition()
+        processes.append(AnimeFaceRecognition())
     elif config['TRIMMING_IMG_PROC']:
-        return TrimmingProcess(800, 450)
+        processes.append(TrimmingProcess(800, 450))
     elif config['DUMMY_IMG_PROC']:
-        return DummyProcess(interval)
+        interval = config['VIDEO_INTERVAL']
+        processes.append(DummyProcess(interval))
     else:
-        return None
+        pass
+    return processes

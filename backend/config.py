@@ -6,7 +6,7 @@ class BaseConfig:
 
     REAL_FACE_IMG_PROC = False
     ANIME_FACE_IMG_PROC = False
-    TRIMMING_IMG_PROC = False
+    TRIMMING_IMG_PROC = True
     DUMMY_IMG_PROC = False
 
     VIDEO_INTERVAL = 0.033

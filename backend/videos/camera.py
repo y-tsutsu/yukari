@@ -6,12 +6,12 @@ import numpy as np
 
 
 class BaseCamera(metaclass=ABCMeta):
-    def __init__(self, img_proc):
-        self._img_proc = img_proc
+    def __init__(self, img_proc_list):
+        self.__img_proc_list = img_proc_list
 
     def _execute_img_proc(self, image):
-        if self._img_proc:
-            image = self._img_proc.execute(image)
+        for img_proc in self.__img_proc_list:
+            image = img_proc.execute(image)
         return image
 
     @abstractmethod
@@ -20,8 +20,8 @@ class BaseCamera(metaclass=ABCMeta):
 
 
 class JpgCamera(BaseCamera):
-    def __init__(self, files, img_proc=None):
-        super().__init__(img_proc)
+    def __init__(self, files, img_proc_list=[]):
+        super().__init__(img_proc_list)
         self.__frames = [cv2.imread(file, cv2.IMREAD_UNCHANGED) for file in files]
 
     def get_frame(self):
@@ -32,8 +32,8 @@ class JpgCamera(BaseCamera):
 
 
 class VideoCaptureCamera(BaseCamera):
-    def __init__(self, filename, img_proc=None):
-        super().__init__(img_proc)
+    def __init__(self, filename, img_proc_list=[]):
+        super().__init__(img_proc_list)
         self.__video = cv2.VideoCapture(filename)
 
     def __inner_get_frame(self):
@@ -53,15 +53,15 @@ class VideoCaptureCamera(BaseCamera):
 
 
 class Mp4Camera(VideoCaptureCamera):
-    def __init__(self, filename, img_proc=None):
-        super().__init__(filename, img_proc)
+    def __init__(self, filename, img_proc_list=[]):
+        super().__init__(filename, img_proc_list)
 
 
 class RtspCamera(VideoCaptureCamera):
-    def __init__(self, url, img_proc=None):
-        super().__init__(url, img_proc)
+    def __init__(self, url, img_proc_list=[]):
+        super().__init__(url, img_proc_list)
 
 
 class WebCamera(VideoCaptureCamera):
-    def __init__(self, cam_id, img_proc=None):
-        super().__init__(cam_id, img_proc)
+    def __init__(self, cam_id, img_proc_list=[]):
+        super().__init__(cam_id, img_proc_list)
