@@ -1,7 +1,8 @@
 from datetime import datetime
+from queue import Queue
+from threading import Thread
 
 from flask_sqlalchemy import SQLAlchemy
-
 
 db = SQLAlchemy()
 
@@ -22,13 +23,19 @@ class Character(db.Model):
 
 
 class CharacterTable:
-    _app = None
+    __app = None
+    __update_queue = None
+    __update_thread = None
 
     @classmethod
     def init_db(cls, app):
-        cls._app = app
+        cls.__app = app
+        cls.__update_queue = Queue()
+        cls.__update_thread = Thread(target=cls.__update_worker, args=(cls.__update_queue,))
+        cls.__update_thread.daemon = True
+        cls.__update_thread.start()
 
-        with cls._app.app_context():
+        with cls.__app.app_context():
             db.init_app(app)
             db.create_all()
 
@@ -43,14 +50,20 @@ class CharacterTable:
             CharacterTable.update_positons([(i + 1, 0, 0, 0, 0) for i in range(len(characters))])
 
     @classmethod
+    def __update_worker(cls, queue):
+        while True:
+            rows = queue.get()
+            cls.update_positons(rows)
+
+    @classmethod
     def get_characters_all(cls):
-        with cls._app.app_context():
+        with cls.__app.app_context():
             characters = Character.query.order_by(Character.pk).all()
             return [{'name': x.name, 'cv': x.cv, 'note': x.note, 'x': x.x, 'y': x.y, 'width': x.width, 'height': x.height} for x in characters]
 
     @classmethod
     def update_positon(cls, pk, x, y, width, height):
-        with cls._app.app_context():
+        with cls.__app.app_context():
             character = Character.query.filter(Character.pk == pk).first()
             character.x = x
             character.y = y
@@ -59,8 +72,13 @@ class CharacterTable:
             db.session.commit()
 
     @classmethod
+    def update_positon_async(cls, pk, x, y, width, height):
+        rows = [(pk, x, y, width, height)]
+        cls.__update_queue.put(rows)
+
+    @classmethod
     def update_positons(cls, rows):
-        with cls._app.app_context():
+        with cls.__app.app_context():
             for pk, x, y, width, height in rows:
                 character = Character.query.filter(Character.pk == pk).first()
                 character.x = x
@@ -68,3 +86,7 @@ class CharacterTable:
                 character.width = width
                 character.height = height
             db.session.commit()
+
+    @classmethod
+    def update_positons_async(cls, rows):
+        cls.__update_queue.put(rows)

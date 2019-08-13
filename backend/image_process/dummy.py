@@ -31,7 +31,7 @@ class DummyProcess(BaseImageProcess):
         rows.append((3, x, y, w, h))
 
         if self.DB_UPDATE_INTERVAL_COUNT <= self.__db_update_count:
-            CharacterTable.update_positons(rows)
+            CharacterTable.update_positons_async(rows)
             self.__db_update_count = 0
         else:
             self.__db_update_count += 1
