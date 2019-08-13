@@ -10,6 +10,10 @@ class BaseCamera(metaclass=ABCMeta):
     def __init__(self, img_proc_list):
         self.__img_proc_list = img_proc_list
 
+    def _prepare_img_proc(self, image):
+        for img_proc in self.__img_proc_list:
+            img_proc.prepare(image)
+
     def _execute_img_proc(self, image):
         for img_proc in self.__img_proc_list:
             image = img_proc.execute(image)
@@ -37,7 +41,7 @@ class VideoCaptureCamera(BaseCamera):
         super().__init__(img_proc_list)
         self.__video = cv2.VideoCapture(source)
 
-    def _inner_get_frame(self):
+    def __inner_get_frame(self):
         ret, frame = self.__video.read()
         if not ret:
             self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
@@ -45,7 +49,7 @@ class VideoCaptureCamera(BaseCamera):
         return ret, frame
 
     def get_frame(self):
-        ret, frame = self._inner_get_frame()
+        ret, frame = self.__inner_get_frame()
         if not ret:
             return frame
         frame = self._execute_img_proc(frame)
@@ -53,49 +57,36 @@ class VideoCaptureCamera(BaseCamera):
         return encimg.tostring()
 
 
-class RtspCamera(VideoCaptureCamera):
-    def __init__(self, url, img_proc_list=[]):
-        super().__init__(url, img_proc_list)
-
-
-class WebCamera(VideoCaptureCamera):
-    def __init__(self, cam_id, img_proc_list=[]):
-        super().__init__(cam_id, img_proc_list)
-
-
-class Mp4Camera(VideoCaptureCamera):
-    def __init__(self, filename, img_proc_list=[]):
-        super().__init__(filename, img_proc_list)
-
-
-class DelayVideoCaptureCamera(VideoCaptureCamera):
+class DelayVideoCaptureCamera(BaseCamera):
     def __init__(self, delay_count, source, img_proc_list=[]):
-        super().__init__(source, img_proc_list)
+        super().__init__(img_proc_list)
+        self.__video = cv2.VideoCapture(source)
+        self.__max_count = delay_count
+        self.__count = 0
         self.__queue = deque()
         for _ in range(delay_count):
-            ret, frame = self._inner_get_frame()
+            ret, frame = self.__inner_get_frame()
             self.__queue.append(frame)
 
+    def __inner_get_frame(self):
+        ret, frame = self.__video.read()
+        if not ret:
+            self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            ret, frame = self.__video.read()
+        return ret, frame
+
     def get_frame(self):
-        ret, frame = self._inner_get_frame()
+        ret, frame = self.__inner_get_frame()
         self.__queue.append(frame)
+        if self.__count == 0:
+            self._prepare_img_proc(frame)
+
         frame = self.__queue.popleft()
         if isinstance(frame, bytes):
             return frame
+
+        frame = self._execute_img_proc(frame)
         ret, encimg = cv2.imencode('.jpg', frame)
+
+        self.__count = 0 if self.__max_count == self.__count else self.__count + 1
         return encimg.tostring()
-
-
-class DelayRtspCamera(DelayVideoCaptureCamera):
-    def __init__(self, delay_count, url, img_proc_list=[]):
-        super().__init__(url, img_proc_list)
-
-
-class DelayWebCamera(DelayVideoCaptureCamera):
-    def __init__(self, delay_count, cam_id, img_proc_list=[]):
-        super().__init__(cam_id, img_proc_list)
-
-
-class DelayMp4Camera(DelayVideoCaptureCamera):
-    def __init__(self, delay_count, filename, img_proc_list=[]):
-        super().__init__(delay_count, filename, img_proc_list)

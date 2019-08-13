@@ -7,3 +7,6 @@ class BaseImageProcess(metaclass=ABCMeta):
     @abstractmethod
     def execute(self, image: np.ndarray):
         pass
+
+    def prepare(self, image: np.ndarray):
+        pass

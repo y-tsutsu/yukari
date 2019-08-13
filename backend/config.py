@@ -9,6 +9,8 @@ class BaseConfig:
 
     REAL_FACE_IMG_PROC = False
     ANIME_FACE_IMG_PROC = False
+    DELAY_REAL_FACE_IMG_PROC = False
+    DELAY_ANIME_FACE_IMG_PROC = False
     TRIMMING_IMG_PROC = False
     DUMMY_IMG_PROC = False
 
@@ -16,7 +18,7 @@ class BaseConfig:
     RTSP_URL = 'rtsp://user:pass@192.168.0.100/live1.sdp'
     MP4_FILE = './videos/sample/sample.mp4'
     WEB_CAM_ID = 0
-    DELAY_COUNT = 5
+    DELAY_COUNT = 10
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///yukari.db'
