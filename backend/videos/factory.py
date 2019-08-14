@@ -15,4 +15,4 @@ def create_camera(config, img_proc_list):
     elif config['DELAY_MP4_CAMERA']:
         return DelayVideoCaptureCamera(config['DELAY_COUNT'], config['MP4_FILE'], img_proc_list)
     else:
-        return JpgCamera([f'./videos/sample/sample{i:02}.jpg' for i in range(1, 4)], img_proc_list)
+        return JpgCamera(config['JPG_FILES'], img_proc_list)
