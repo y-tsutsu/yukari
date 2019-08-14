@@ -16,6 +16,6 @@ def create_image_processes(config):
     if config['TRIMMING_IMG_PROC']:
         processes.append(TrimmingProcess(800, 450))
     if config['DUMMY_IMG_PROC']:
-        interval = config['VIDEO_INTERVAL']
+        interval = config['VIDEO_INTERVAL_SEC']
         processes.append(DummyProcess(interval))
     return processes

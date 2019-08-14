@@ -14,7 +14,7 @@ class BaseConfig:
     TRIMMING_IMG_PROC = False
     DUMMY_IMG_PROC = False
 
-    VIDEO_INTERVAL = 0.033
+    VIDEO_INTERVAL_SEC = 0.033
     RTSP_URL = 'rtsp://user:pass@192.168.0.100/live1.sdp'
     MP4_FILE = './videos/sample/sample.mp4'
     JPG_FILES = [f'./videos/sample/sample{i:02}.jpg' for i in range(1, 4)]

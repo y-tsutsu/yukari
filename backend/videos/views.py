@@ -19,13 +19,13 @@ def gen(camera, interval):
         if 0 < sleep_time:
             sleep(sleep_time)
         else:
-            print(f'@@@ sleep time is minus value. {sleep_time}')
+            print(f'@@@ sleep time is minus value. {sleep_time * 1000} msec')
 
 
 @video_bp.route('/')
 def video_feed():
     config = current_app.config
-    interval = config['VIDEO_INTERVAL']
+    interval = config['VIDEO_INTERVAL_SEC']
 
     img_proc_list = create_image_processes(config)
     camera = create_camera(config, img_proc_list)
