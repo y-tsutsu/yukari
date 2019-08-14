@@ -12,6 +12,25 @@ export default {
   name: 'app',
   components: {
     TopBar
+  },
+  methods: {
+    createPageTitle: function (to) {
+      if (to.meta.title) {
+        var setTitle = 'Yukari | ' + to.meta.title
+        document.title = setTitle
+      } else {
+        document.title = 'Yukari'
+      }
+    }
+  },
+  mounted: function () {
+    var to = this.$route
+    this.createPageTitle(to)
+  },
+  watch: {
+    '$route' (to, from) {
+      this.createPageTitle(to)
+    }
   }
 }
 </script>

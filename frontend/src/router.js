@@ -12,12 +12,14 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      meta: { title: 'カメラ画像' }
     },
     {
       path: '/about',
       name: 'about',
-      component: Abort
+      component: Abort,
+      meta: { title: 'アバウト' }
     }
   ]
 })
