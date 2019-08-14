@@ -1,4 +1,5 @@
 class BaseConfig:
+    # カメラ種別
     RTSP_CAMERA = False
     WEB_CAMERA = False
     MP4_CAMERA = True
@@ -7,6 +8,7 @@ class BaseConfig:
     DELAY_MP4_CAMERA = False
     JPG_CAMERA = False
 
+    # 画像処理
     REAL_FACE_IMG_PROC = False
     ANIME_FACE_IMG_PROC = False
     DELAY_REAL_FACE_IMG_PROC = False
@@ -14,6 +16,7 @@ class BaseConfig:
     TRIMMING_IMG_PROC = False
     DUMMY_IMG_PROC = False
 
+    # 映像表示関連
     VIDEO_INTERVAL_SEC = 0.033
     RTSP_URL = 'rtsp://user:pass@192.168.0.100/live1.sdp'
     MP4_FILE = './videos/sample/sample.mp4'
@@ -21,5 +24,6 @@ class BaseConfig:
     WEB_CAM_ID = 0
     DELAY_COUNT = 10
 
+    # DB関連
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_DATABASE_URI = 'sqlite:///yukari.db'
