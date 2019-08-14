@@ -39,17 +39,17 @@ class JpgCamera(BaseCamera):
 class VideoCaptureCamera(BaseCamera):
     def __init__(self, source, img_proc_list=[]):
         super().__init__(img_proc_list)
-        self.__video = cv2.VideoCapture(source)
+        self._video = cv2.VideoCapture(source)
 
-    def __inner_get_frame(self):
-        ret, frame = self.__video.read()
+    def _inner_get_frame(self):
+        ret, frame = self._video.read()
         if not ret:
-            self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            ret, frame = self.__video.read()
+            self._video.set(cv2.CAP_PROP_POS_FRAMES, 0)
+            ret, frame = self._video.read()
         return ret, frame
 
     def get_frame(self):
-        ret, frame = self.__inner_get_frame()
+        ret, frame = self._inner_get_frame()
         if not ret:
             return frame
         frame = self._execute_img_proc(frame)
@@ -57,36 +57,28 @@ class VideoCaptureCamera(BaseCamera):
         return encimg.tostring()
 
 
-class DelayVideoCaptureCamera(BaseCamera):
+class DelayVideoCaptureCamera(VideoCaptureCamera):
     def __init__(self, delay_count, source, img_proc_list=[]):
-        super().__init__(img_proc_list)
-        self.__video = cv2.VideoCapture(source)
-        self.__max_count = delay_count
-        self.__count = 0
-        self.__queue = deque()
+        super().__init__(source, img_proc_list)
+        self.__prepare_image = None
+        self.__image_queue = deque()
         for _ in range(delay_count):
-            ret, frame = self.__inner_get_frame()
-            self.__queue.append(frame)
-
-    def __inner_get_frame(self):
-        ret, frame = self.__video.read()
-        if not ret:
-            self.__video.set(cv2.CAP_PROP_POS_FRAMES, 0)
-            ret, frame = self.__video.read()
-        return ret, frame
+            ret, frame = self._inner_get_frame()
+            self.__image_queue.append(frame)
 
     def get_frame(self):
-        ret, frame = self.__inner_get_frame()
-        self.__queue.append(frame)
-        if self.__count == 0:
+        ret, frame = self._inner_get_frame()
+        self.__image_queue.append(frame)
+        if self.__prepare_image is None:
+            self.__prepare_image = frame
             self._prepare_img_proc(frame)
 
-        frame = self.__queue.popleft()
+        frame = self.__image_queue.popleft()
         if isinstance(frame, bytes):
             return frame
+        self.__prepare_image = None if frame is self.__prepare_image else self.__prepare_image
 
         frame = self._execute_img_proc(frame)
-        ret, encimg = cv2.imencode('.jpg', frame)
 
-        self.__count = 0 if self.__max_count == self.__count else self.__count + 1
+        ret, encimg = cv2.imencode('.jpg', frame)
         return encimg.tostring()

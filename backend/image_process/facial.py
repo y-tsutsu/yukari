@@ -21,7 +21,9 @@ class FacialRecognition(BaseImageProcess):
 
         gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         gray_image = cv2.equalizeHist(gray_image)
-        faces = self.__classifier.detectMultiScale(gray_image, minSize=(50, 50))
+        height, width, _ = image.shape
+        min_ = min(height, width) // 15
+        faces = self.__classifier.detectMultiScale(gray_image, minSize=(min_, min_))
 
         for i, (x, y, w, h) in enumerate(faces):
             cv2.rectangle(image, (x, y), (x + w, y + h), color=(122, 64, 236), thickness=2)
@@ -51,7 +53,9 @@ class DelayFacialRecognition(BaseImageProcess):
             image = queue.get()
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             gray_image = cv2.equalizeHist(gray_image)
-            faces = self.__classifier.detectMultiScale(gray_image, minSize=(50, 50))
+            height, width, _ = image.shape
+            min_ = min(height, width) // 15
+            faces = self.__classifier.detectMultiScale(gray_image, minSize=(min_, min_))
 
             self.__prepare_rows.clear()
             for i, (x, y, w, h) in enumerate(faces):
