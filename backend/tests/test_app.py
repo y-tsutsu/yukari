@@ -11,14 +11,14 @@ class TestApp(TestCase):
         pass
 
     def test_spa_route(self):
-        rv = self.__app.get('/')
-        self.assertEqual(200, rv.status_code)
-        rv = self.__app.get('/spam/')
-        self.assertEqual(200, rv.status_code)
-        rv = self.__app.get('/spam/ham/')
-        self.assertEqual(200, rv.status_code)
-        rv = self.__app.get('/spam/ham/egg/')
-        self.assertEqual(200, rv.status_code)
+        res = self.__app.get('/')
+        self.assertEqual(200, res.status_code)
+        res = self.__app.get('/spam/')
+        self.assertEqual(200, res.status_code)
+        res = self.__app.get('/spam/ham/')
+        self.assertEqual(200, res.status_code)
+        res = self.__app.get('/spam/ham/egg/')
+        self.assertEqual(200, res.status_code)
 
 
 if __name__ == '__main__':
