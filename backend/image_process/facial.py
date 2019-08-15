@@ -10,27 +10,43 @@ from models.character import CharacterTable
 from .base import BaseImageProcess
 
 
+def calc_scale(width):
+    scaled_width = 300
+    return scaled_width / width
+
+
 class FacialRecognition(BaseImageProcess):
-    def __init__(self, filename):
+    def __init__(self, filename, interval):
         xml_name = join(dirname(__file__), filename)
         self.__classifier = cv2.CascadeClassifier(xml_name)
         self.__dummy_row = [(i, 0, 0, 0, 0) for i in range(1, 4)]
+        self.__db_update_count = 0
+        self.DB_UPDATE_INTERVAL_COUNT = int(0.5 / interval * (2 / 3))
 
     def execute(self, image):
-        rows = []
-
-        gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        gray_image = cv2.equalizeHist(gray_image)
         height, width, _ = image.shape
+        scale = calc_scale(width)
+        resize_image = cv2.resize(image, dsize=None, fx=scale, fy=scale)
+        gray_image = cv2.cvtColor(resize_image, cv2.COLOR_BGR2GRAY)
+        gray_image = cv2.equalizeHist(gray_image)
         min_ = min(height, width) // 15
         faces = self.__classifier.detectMultiScale(gray_image, minSize=(min_, min_))
 
+        rows = []
         for i, (x, y, w, h) in enumerate(faces):
+            x = int(x / scale)
+            y = int(y / scale)
+            w = int(w / scale)
+            h = int(h / scale)
             cv2.rectangle(image, (x, y), (x + w, y + h), color=(122, 64, 236), thickness=2)
             rows.append((i + 1, int(x), int(y), int(w), int(h)))
 
-        rows += self.__dummy_row[len(rows):]
-        CharacterTable.update_positons(rows[:3])
+        if self.DB_UPDATE_INTERVAL_COUNT <= self.__db_update_count:
+            rows += self.__dummy_row[len(rows):]
+            CharacterTable.update_positons(rows[:3])
+            self.__db_update_count = 0
+        else:
+            self.__db_update_count += 1
 
         return image
 
@@ -51,15 +67,17 @@ class DelayFacialRecognition(BaseImageProcess):
     def __prepare_worker(self, queue):
         while True:
             image = queue.get()
-            gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            gray_image = cv2.equalizeHist(gray_image)
             height, width, _ = image.shape
-            min_ = min(height, width) // 15
+            scale = calc_scale(width)
+            resize_image = cv2.resize(image, dsize=None, fx=scale, fy=scale)
+            gray_image = cv2.cvtColor(resize_image, cv2.COLOR_BGR2GRAY)
+            gray_image = cv2.equalizeHist(gray_image)
+            min_ = int(min(height * scale, width * scale) / 15)
             faces = self.__classifier.detectMultiScale(gray_image, minSize=(min_, min_))
 
             self.__prepare_rows.clear()
             for i, (x, y, w, h) in enumerate(faces):
-                self.__prepare_rows.append((i + 1, int(x), int(y), int(w), int(h)))
+                self.__prepare_rows.append((i + 1, int(x / scale), int(y / scale), int(w / scale), int(h / scale)))
 
             self.__prepare_queue.task_done()
 
