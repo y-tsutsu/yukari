@@ -46,8 +46,9 @@ class CharacterTable:
                 yui = Character(name='櫟井 唯', cv='津田 美波', note='情報処理部の部員3人の中では一番の常識人でしっかり者。サバサバとした性格で言動もやや男性的であり、毎回暴走しがちなゆずこと天然な縁に対するツッコミ役でもある。高校2年から胸が急成長している。')
                 db.session.add_all([yuzuko, yukari, yui])
                 db.session.commit()
+                characters = Character.query.order_by(Character.pk).all()
 
-            CharacterTable.update_positons([(i + 1, 0, 0, 0, 0) for i in range(len(characters))])
+            cls.update_positons([(i + 1, 0, 0, 0, 0) for i in range(len(characters))])
 
     @classmethod
     def __update_worker(cls, queue):
