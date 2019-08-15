@@ -1,9 +1,10 @@
 from flask import Flask
 
 from api.api import api_bp
-from app.views import app_bp
 from config import BaseConfig
 from videos.views import video_bp
+
+from .views import app_bp
 
 
 def create_app(name):

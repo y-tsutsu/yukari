@@ -1,6 +1,6 @@
-from image_process.dummy import DummyProcess
-from image_process.facial import DelayFacialRecognition, FacialRecognition
-from image_process.trimming import TrimmingProcess
+from .dummy import DummyProcess
+from .facial import DelayFacialRecognition, FacialRecognition
+from .trimming import TrimmingProcess
 
 
 def create_image_processes(config):
