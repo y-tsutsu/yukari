@@ -1,6 +1,6 @@
 # Yukari -- 縁 --
 
-Networkカメラなどの映像に対してリアルタイムに画像処理を行い，その結果加工した映像や情報をリアルタイムにブラウザ上に表示するWebアプリのデモ．
+Networkカメラなどの映像に対して画像処理を行い，その結果加工した映像や情報をリアルタイムにブラウザ上に表示するWebアプリのデモ．
 
 # 実行環境（開発環境）のセットアップ
 
@@ -39,7 +39,8 @@ $ npm run build  # Output dist directory
 
 ## バックエンドエンド
 
-Flask を使ったバックエンド（Webサーバ + 画像認識）の環境構築
+Flask を使ったバックエンド（Webサーバ SPA・REST）の環境構築  
+OpenCVを使った画像認識の環境構築
 
 ### Requirements
 
@@ -85,7 +86,7 @@ $ npm run serve  # Access to http://localhost:8080/
 
 ### Run Server
 
-フロントエンドのWebサーバを起動します．事前にフロントエンドのBuildを行う必要があります．
+フロントエンドのWebサーバの起動（事前にフロントエンドのBuildが必要）
 
 ```sh
 $ cd ./yukari/backend
