@@ -18,6 +18,8 @@ flask-sqlalchemy = "*"
 python_version = "3.7"
 
 [scripts]
-start = "python yukari.py"
+start = "python yukari.py '../frontend/dist/'"
+help = "python yukari.py -h"
+test = "python -m unittest discover -v"
 format = "autopep8 -ivr ."
 lint = "flake8 --show-source ."
