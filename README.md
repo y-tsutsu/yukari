@@ -26,6 +26,7 @@ Vue.js + Element を使ったフロントエンドの環境構築
 ```sh
 $ cd ./yukari/frontend
 $ npm ci
+$ npm run download-fonts
 ```
 
 ### Build

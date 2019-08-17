@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "json-mock": "npx json-server --watch db.json --routes routes.json --port 5000"
+    "json-mock": "npx json-server --watch db.json --routes routes.json --port 5000",
+    "download-fonts": "npx get-google-fonts -i https://fonts.googleapis.com/css?family=M+PLUS+1p -o ./public/static/fonts"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -24,6 +25,7 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "get-google-fonts": "^1.2.0",
     "json-server": "^0.15.0",
     "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.10"
