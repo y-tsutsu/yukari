@@ -2,7 +2,6 @@
   <div class="hello">
     <el-menu
       :default-active="activeIndex"
-      class="el-menu-demo"
       mode="horizontal"
       background-color="#7986cb"
       text-color="#fff"

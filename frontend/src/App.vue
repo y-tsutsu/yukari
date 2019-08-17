@@ -35,9 +35,11 @@ export default {
 }
 </script>
 
-<style>
-body {
+<style scoped>
+#app {
+  font-family: 'M PLUS 1p', 'Avenir', Helvetica, Arial, sans-serif;
   text-align: center;
+  color: #2c3e50;
 }
 .top-bar {
   margin-bottom: 30px
