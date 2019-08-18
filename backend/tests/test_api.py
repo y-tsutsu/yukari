@@ -21,21 +21,21 @@ class TestApi(TestCase):
         remove(db_filename)
 
     def test_api_route(self):
-        res = self.__app.get('/api/infos')
+        res = self.__app.get('/api/characters')
         self.assertEqual(200, res.status_code)
         self.assertTrue(res.is_json)
 
-        res = self.__app.post('/api/infos')
+        res = self.__app.post('/api/characters')
         self.assertEqual(404, res.status_code)
 
-        res = self.__app.put('/api/infos')
+        res = self.__app.put('/api/characters')
         self.assertEqual(404, res.status_code)
 
-        res = self.__app.delete('/api/infos')
+        res = self.__app.delete('/api/characters')
         self.assertEqual(404, res.status_code)
 
     def test_api_json(self):
-        res = self.__app.get('/api/infos')
+        res = self.__app.get('/api/characters')
         self.assertGreaterEqual(len(res.json), 3)
         for x in res.json:
             self.assertTrue('name' in x)

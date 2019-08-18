@@ -24,4 +24,4 @@ class CharacterInfo(Resource):
 
 
 rest_api = Api(api)
-rest_api.add_resource(CharacterInfo, '/infos')
+rest_api.add_resource(CharacterInfo, '/characters')

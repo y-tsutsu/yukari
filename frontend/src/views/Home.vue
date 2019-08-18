@@ -13,10 +13,15 @@
 </template>
 
 <script>
+const REST_INTERVAL_MSEC = 500
+const REST_TIMEOUT_MSEC = 1000
 const axios =
   process.env.VUE_APP_REST_SERVER === 'json-mock'
-    ? require('axios').create({ baseURL: 'http://localhost:5000' })
-    : require('axios')
+    ? require('axios').create({
+      timeout: REST_TIMEOUT_MSEC,
+      baseURL: 'http://localhost:5000'
+    })
+    : require('axios').create({ timeout: REST_TIMEOUT_MSEC })
 
 export default {
   name: 'home',
@@ -28,15 +33,19 @@ export default {
   },
   mounted () {
     this.updataTableData()
-    this.timer = setInterval(this.updataTableData, 500)
+    this.timer = setInterval(this.updataTableData, REST_INTERVAL_MSEC)
   },
   destroyed () {
     clearInterval(this.timer)
   },
   methods: {
     updataTableData: async function () {
-      const response = await axios.get('/api/infos')
-      this.tableData = response.data
+      try {
+        const response = await axios.get('/api/characters')
+        this.tableData = response.data
+      } catch (error) {
+        console.log(error.message)
+      }
     }
   },
   computed: {
