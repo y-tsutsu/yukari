@@ -3,8 +3,8 @@ from os.path import dirname, join
 from time import sleep
 from unittest import TestCase, main
 
-from app.factory import create_app
 from models.character import CharacterTable
+from yukari import create_app
 
 
 class TestCharacter(TestCase):

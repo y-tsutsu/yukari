@@ -2,8 +2,8 @@ from os import remove
 from os.path import dirname, join
 from unittest import TestCase, main
 
-from app.factory import create_app
 from models.character import CharacterTable
+from yukari import create_app
 
 
 class TestApi(TestCase):

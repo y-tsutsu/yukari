@@ -6,7 +6,7 @@ from image_process.factory import create_image_processes
 
 from .factory import create_camera
 
-video_bp = Blueprint('video', __name__, url_prefix='/video')
+video = Blueprint('video', __name__, url_prefix='/video')
 
 
 def gen(camera, interval):
@@ -22,7 +22,7 @@ def gen(camera, interval):
             print(f'@@@ sleep time is minus value. {sleep_time * 1000} msec')
 
 
-@video_bp.route('/')
+@video.route('/')
 def video_feed():
     config = current_app.config
     interval = config['VIDEO_INTERVAL_SEC']

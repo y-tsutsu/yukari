@@ -1,6 +1,6 @@
 from unittest import TestCase, main
 
-from app.factory import create_app
+from yukari import create_app
 
 
 class TestApi(TestCase):

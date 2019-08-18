@@ -3,7 +3,7 @@ from flask_restful import Api, Resource
 
 from models.character import CharacterTable
 
-api_bp = Blueprint('api', __name__, url_prefix='/api')
+api = Blueprint('api', __name__, url_prefix='/api')
 
 
 class CharacterInfo(Resource):
@@ -23,5 +23,5 @@ class CharacterInfo(Resource):
         abort(404)
 
 
-api = Api(api_bp)
-api.add_resource(CharacterInfo, '/infos')
+rest_api = Api(api)
+rest_api.add_resource(CharacterInfo, '/infos')

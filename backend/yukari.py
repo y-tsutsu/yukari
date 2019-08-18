@@ -1,7 +1,13 @@
 from argparse import ArgumentParser
+from os import path
 
-from app.factory import create_app
+from flask import Flask
+
+from api.api import api
+from config import BaseConfig
 from models.character import CharacterTable
+from spa.views import spa
+from videos.views import video
 
 
 def create_arg_parser():
@@ -10,6 +16,15 @@ def create_arg_parser():
                             'browser in real time.')
     parser.add_argument('front_root', nargs='?', default='./', help='front-end root directory.')
     return parser
+
+
+def create_app(name, front_root):
+    app = Flask(name, static_folder=path.join(front_root, 'static'), template_folder=front_root)
+    app.register_blueprint(api)
+    app.register_blueprint(video)
+    app.register_blueprint(spa)
+    app.config.from_object(BaseConfig)
+    return app
 
 
 def main():
