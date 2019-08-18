@@ -16,7 +16,7 @@ Vue.js + Element を使ったフロントエンドの環境構築
 
 ### Requirements
 
-* Node.jp (10.16.1)
+* Node.js (10.16.1)
 * npm (6.9.0)
 
 ### Install
@@ -31,14 +31,14 @@ $ npm run download-fonts
 
 ### Build
 
-バックエンド側から呼び出す一式を生成する
+バックエンド側から読み込む一式を生成する
 
 ```sh
 $ cd ./yukari/frontend
 $ npm run build  # Output dist directory
 ```
 
-## バックエンドエンド
+## バックエンド
 
 Flask を使ったバックエンド（Webサーバ SPA・REST）の環境構築  
 OpenCVを使った画像認識の環境構築
@@ -81,7 +81,7 @@ $ cd ./yukari/frontend
 $ npm run serve  # Access to http://localhost:8080/
 ```
 
-## バックエンドエンド
+## バックエンド
 
 本番環境のWebサーバの起動
 
