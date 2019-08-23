@@ -5,7 +5,7 @@ from flask import Flask
 
 from api.api import api
 from config import BaseConfig
-from models.character import CharacterTable
+from models.database import init_db
 from spa.views import spa
 from videos.views import video
 
@@ -31,7 +31,7 @@ def main():
     parser = create_arg_parser()
     args = parser.parse_args()
     app = create_app(__name__, args.front_root)
-    CharacterTable.init_db(app)
+    init_db(app)
     app.run(debug=True, host='0.0.0.0', port=80)
 
 

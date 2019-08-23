@@ -2,7 +2,7 @@ from os import remove
 from os.path import dirname, join
 from unittest import TestCase, main
 
-from models.character import CharacterTable
+from models.database import init_db
 from yukari import create_app
 
 
@@ -13,7 +13,7 @@ class TestApi(TestCase):
         app = create_app(__name__, '../../frontend/dist/')
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{TestApi.TEST_DB_FILENAME}'
-        CharacterTable.init_db(app)
+        init_db(app)
         self.__app = app.test_client()
 
     def tearDown(self):

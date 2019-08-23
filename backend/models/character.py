@@ -2,9 +2,7 @@ from datetime import datetime
 from queue import Queue
 from threading import Thread
 
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from models.database import db
 
 
 class Character(db.Model):
@@ -35,7 +33,6 @@ class CharacterTable:
         cls.__update_thread.daemon = True
         cls.__update_thread.start()
 
-        db.init_app(app)
         with cls.__app.app_context():
             db.create_all()
 

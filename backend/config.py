@@ -26,3 +26,4 @@ class BaseConfig:
 
     # DB関連
     SQLALCHEMY_DATABASE_URI = 'sqlite:///yukari.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False

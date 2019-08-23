@@ -4,6 +4,7 @@ from time import sleep
 from unittest import TestCase, main
 
 from models.character import CharacterTable
+from models.database import init_db
 from yukari import create_app
 
 
@@ -14,7 +15,7 @@ class TestCharacter(TestCase):
         app = create_app(__name__, '../../frontend/dist/')
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{TestCharacter.TEST_DB_FILENAME}'
-        CharacterTable.init_db(app)
+        init_db(app)
 
     def tearDown(self):
         db_filename = join(dirname(__file__), TestCharacter.TEST_DB_FILENAME)
