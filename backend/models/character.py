@@ -35,8 +35,8 @@ class CharacterTable:
         cls.__update_thread.daemon = True
         cls.__update_thread.start()
 
+        db.init_app(app)
         with cls.__app.app_context():
-            db.init_app(app)
             db.create_all()
 
             characters = Character.query.order_by(Character.pk).all()
