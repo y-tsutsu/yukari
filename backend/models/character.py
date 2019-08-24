@@ -34,8 +34,6 @@ class CharacterTable:
         cls.__update_thread.start()
 
         with cls.__app.app_context():
-            db.create_all()
-
             characters = Character.query.order_by(Character.pk).all()
             if not characters:
                 yuzuko = Character(name='野々原 ゆずこ', cv='大久保 瑠美', note='天真爛漫な性格で元気で無邪気な少女。いたずら好きでよく唯にしており、また奇妙な言動や発想も多い。しかし、成績は優秀で、時々急に真面目になることもある。')
