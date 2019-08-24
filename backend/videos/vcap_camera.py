@@ -1,39 +1,8 @@
-from abc import ABCMeta, abstractmethod
 from collections import deque
-from time import time
 
 import cv2
-import numpy as np
 
-
-class BaseCamera(metaclass=ABCMeta):
-    def __init__(self, img_proc_list):
-        self.__img_proc_list = img_proc_list
-
-    def _prepare_img_proc(self, image):
-        for img_proc in self.__img_proc_list:
-            img_proc.prepare(image)
-
-    def _execute_img_proc(self, image):
-        for img_proc in self.__img_proc_list:
-            image = img_proc.execute(image)
-        return image
-
-    @abstractmethod
-    def get_frame(self):
-        pass
-
-
-class JpgCamera(BaseCamera):
-    def __init__(self, files, img_proc_list=[]):
-        super().__init__(img_proc_list)
-        self.__frames = [cv2.imread(file, cv2.IMREAD_UNCHANGED) for file in files]
-
-    def get_frame(self):
-        jpg = np.copy(self.__frames[int(time()) % 3])
-        jpg = self._execute_img_proc(jpg)
-        ret, encimg = cv2.imencode('.jpg', jpg)
-        return encimg.tostring()
+from .base_camera import BaseCamera
 
 
 class VideoCaptureCamera(BaseCamera):

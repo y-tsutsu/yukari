@@ -1,4 +1,5 @@
-from .camera import DelayVideoCaptureCamera, JpgCamera, VideoCaptureCamera
+from .jpg_camera import JpgCamera
+from .vcap_camera import DelayVideoCaptureCamera, VideoCaptureCamera
 
 
 def create_camera(config, img_proc_list):
