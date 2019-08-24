@@ -6,6 +6,7 @@ class BaseConfig:
     DELAY_RTSP_CAMERA = False
     DELAY_WEB_CAMERA = False
     DELAY_MP4_CAMERA = False
+    LIFE_GAME_CAMERA = False
     JPG_CAMERA = False
 
     # 画像処理
