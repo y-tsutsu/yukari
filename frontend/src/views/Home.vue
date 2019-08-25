@@ -19,7 +19,7 @@ const axios =
   process.env.VUE_APP_REST_SERVER === 'json-mock'
     ? require('axios').create({
       timeout: REST_TIMEOUT_MSEC,
-      baseURL: 'http://localhost:5000'
+      baseURL: 'http://localhost:3000'
     })
     : require('axios').create({ timeout: REST_TIMEOUT_MSEC })
 
