@@ -3,7 +3,7 @@ from unittest import TestCase, main
 from yukari import create_app
 
 
-class TestApp(TestCase):
+class TestSpa(TestCase):
     def setUp(self):
         self.__app = create_app(__name__, '../../frontend/dist/').test_client()
 
