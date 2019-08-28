@@ -43,8 +43,7 @@ export default {
       try {
         const response = await axios.get('/api/characters')
         this.tableData = response.data
-      } catch (error) {
-        console.log(error.message)
+      } finally {
       }
     }
   },
