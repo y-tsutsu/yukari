@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <el-menu
-      :default-active="activeIndex"
+      :default-active="this.$route.name"
       mode="horizontal"
       background-color="#7986cb"
       text-color="#fff"
@@ -19,12 +19,7 @@
 
 <script>
 export default {
-  name: 'TopBar',
-  data () {
-    return {
-      activeIndex: this.$route.name
-    }
-  }
+  name: 'TopBar'
 }
 </script>
 
