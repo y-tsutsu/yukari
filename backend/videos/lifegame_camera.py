@@ -58,4 +58,4 @@ class LifeGameCamera(BaseCamera):
             self.__count = 0
         image = self._execute_img_proc(self.__image)
         ret, encimg = cv2.imencode('.jpg', image)
-        return encimg.tostring()
+        return encimg.tobytes()

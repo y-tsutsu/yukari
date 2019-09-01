@@ -23,7 +23,7 @@ class VideoCaptureCamera(BaseCamera):
             return frame
         frame = self._execute_img_proc(frame)
         ret, encimg = cv2.imencode('.jpg', frame)
-        return encimg.tostring()
+        return encimg.tobytes()
 
 
 class DelayVideoCaptureCamera(VideoCaptureCamera):
@@ -50,4 +50,4 @@ class DelayVideoCaptureCamera(VideoCaptureCamera):
         frame = self._execute_img_proc(frame)
 
         ret, encimg = cv2.imencode('.jpg', frame)
-        return encimg.tostring()
+        return encimg.tobytes()

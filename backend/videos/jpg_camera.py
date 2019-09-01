@@ -15,4 +15,4 @@ class JpgCamera(BaseCamera):
         jpg = np.copy(self.__frames[int(time()) % 3])
         jpg = self._execute_img_proc(jpg)
         ret, encimg = cv2.imencode('.jpg', jpg)
-        return encimg.tostring()
+        return encimg.tobytes()
