@@ -2,19 +2,19 @@ class BaseConfig:
     # カメラ種別
     RTSP_CAMERA = False
     WEB_CAMERA = False
-    MP4_CAMERA = True
+    MP4_CAMERA = False
     DELAY_RTSP_CAMERA = False
     DELAY_WEB_CAMERA = False
     DELAY_MP4_CAMERA = False
     LIFE_GAME_CAMERA = False
-    JPG_CAMERA = False
+    JPG_CAMERA = True
 
     # 画像処理
     REAL_FACE_IMG_PROC = False
     ANIME_FACE_IMG_PROC = False
     DELAY_REAL_FACE_IMG_PROC = False
     DELAY_ANIME_FACE_IMG_PROC = False
-    TRIMMING_IMG_PROC = False
+    TRIMMING_IMG_PROC = True
     DUMMY_IMG_PROC = False
 
     # 映像表示関連
