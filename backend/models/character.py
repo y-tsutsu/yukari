@@ -30,7 +30,7 @@ class CharacterTable:
         cls.__app = app
         cls.__update_queue = Queue()
         cls.__update_thread = Thread(target=cls.__update_worker, args=(cls.__update_queue,))
-        cls.__update_thread.daemon = True
+        cls.__update_thread.setDaemon(True)
         cls.__update_thread.start()
 
         with cls.__app.app_context():
