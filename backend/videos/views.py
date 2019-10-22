@@ -1,3 +1,4 @@
+from logging import Formatter, StreamHandler, getLogger
 from time import sleep, time
 
 from flask import Blueprint, Response, current_app
@@ -5,6 +6,11 @@ from flask import Blueprint, Response, current_app
 from image_process.factory import create_image_processes
 
 from .factory import create_camera
+
+logger = getLogger(__name__)
+handler = StreamHandler()
+handler.setFormatter(Formatter('%(levelname)s: %(message)s'))
+logger.addHandler(handler)
 
 video = Blueprint('video', __name__, url_prefix='/video')
 
@@ -19,7 +25,7 @@ def gen(camera, interval):
         if 0 < sleep_time:
             sleep(sleep_time)
         else:
-            print(f'@@@ sleep time is minus value. {sleep_time * 1000} msec')
+            logger.warn(f'@@@ sleep time is minus value. {sleep_time * 1000} msec')
 
 
 @video.route('/')
