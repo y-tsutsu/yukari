@@ -13,6 +13,7 @@ flask = "*"
 flask-restful = "*"
 opencv-python = "*"
 flask-sqlalchemy = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"
