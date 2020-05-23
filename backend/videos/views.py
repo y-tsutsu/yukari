@@ -17,15 +17,21 @@ video = Blueprint('video', __name__, url_prefix='/video')
 
 def gen(camera, interval):
     while True:
-        s = time()
-        frame = camera.get_frame()
-        yield b'--frame\r\n' + b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n'
-        e = time()
-        sleep_time = interval - (e - s)
-        if 0 < sleep_time:
-            sleep(sleep_time)
-        else:
-            logger.warn(f'@@@ sleep time is minus value. {sleep_time * 1000} msec')
+        try:
+            s = time()
+            frame = camera.get_frame()
+            if frame:
+                yield b'--frame\r\n' + b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n'
+            else:
+                logger.warn('@@@ frame in None')
+            e = time()
+            sleep_time = interval - (e - s)
+            if 0 < sleep_time:
+                sleep(sleep_time)
+            else:
+                logger.warn(f'@@@ sleep time is minus value. {sleep_time * 1000} msec')
+        except Exception as ex:
+            logger.error(f'### Exception: {ex}')
 
 
 @video.route('/')
