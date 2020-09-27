@@ -13,8 +13,8 @@
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
     "element-ui": "^2.4.5",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.5",
     "vuex": "^3.4.0"
   },
   "devDependencies": {
@@ -34,7 +34,7 @@
     "get-google-fonts": "^1.2.2",
     "json-server": "^0.16.1",
     "vue-cli-plugin-element": "~1.0.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.12"
   },
   "prettier": {
     "semi": false,
