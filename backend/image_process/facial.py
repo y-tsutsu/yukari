@@ -79,7 +79,7 @@ class DelayFacialRecognition(BaseImageProcess):
             for i, (x, y, w, h) in enumerate(faces):
                 self.__prepare_rows.append((i + 1, int(x / scale), int(y / scale), int(w / scale), int(h / scale)))
 
-            self.__prepare_queue.task_done()
+            queue.task_done()
 
     def execute(self, image):
         if image is self.__image:
