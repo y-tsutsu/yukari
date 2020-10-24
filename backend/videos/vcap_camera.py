@@ -37,14 +37,15 @@ class DelayVideoCaptureCamera(VideoCaptureCamera):
 
     def get_frame(self):
         ret, frame = self._inner_get_frame()
+        if not ret:
+            return frame
+
         self.__image_queue.append(frame)
         if self.__prepare_image is None:
             self.__prepare_image = frame
             self._prepare_img_proc(frame)
 
         frame = self.__image_queue.popleft()
-        if isinstance(frame, bytes):
-            return frame
         self.__prepare_image = None if frame is self.__prepare_image else self.__prepare_image
 
         frame = self._execute_img_proc(frame)

@@ -23,7 +23,7 @@ def gen(camera, interval):
             if frame:
                 yield b'--frame\r\n' + b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n'
             else:
-                logger.warn('@@@ frame in None')
+                logger.warn('@@@ frame is None')
             e = time()
             sleep_time = interval - (e - s)
             if 0 < sleep_time:
