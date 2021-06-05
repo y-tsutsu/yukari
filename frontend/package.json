@@ -11,9 +11,9 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
-    "core-js": "^3.13.0",
+    "core-js": "^3.14.0",
     "element-ui": "^2.15.2",
-    "vue": "^2.6.12",
+    "vue": "^2.6.13",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
   },
@@ -26,7 +26,7 @@
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-standard": "^4.1.0",
@@ -34,7 +34,7 @@
     "get-google-fonts": "^1.2.2",
     "json-server": "^0.16.3",
     "vue-cli-plugin-element": "~1.0.1",
-    "vue-template-compiler": "^2.6.12"
+    "vue-template-compiler": "^2.6.13"
   },
   "prettier": {
     "semi": false,
