@@ -41,7 +41,7 @@ class LifeGameCamera(BaseCamera):
 
     def __draw_image(self, matrix):
         image = np.full((self.__size * LifeGameCamera.BASE_SIZE, self.__size * LifeGameCamera.BASE_SIZE, 3), 255, dtype=np.uint8)
-        for y, row in enumerate(self.__matrix):
+        for y, row in enumerate(matrix):
             for x, value in enumerate(row):
                 if not value:
                     continue
@@ -57,5 +57,5 @@ class LifeGameCamera(BaseCamera):
             self.__image = self.__draw_image(self.__matrix)
             self.__count = 0
         image = self._execute_img_proc(self.__image)
-        ret, encimg = cv2.imencode('.jpg', image)
+        _, encimg = cv2.imencode('.jpg', image)
         return encimg.tobytes()
