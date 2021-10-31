@@ -10,7 +10,7 @@
     "download-fonts": "npx get-google-fonts -i https://fonts.googleapis.com/css?family=M+PLUS+1p -o ./public/static/fonts"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "core-js": "^3.16.1",
     "element-ui": "^2.15.5",
     "vue": "^2.6.14",
