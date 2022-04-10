@@ -24,7 +24,6 @@ const axios =
     : require('axios').create({ timeout: REST_TIMEOUT_MSEC })
 
 export default {
-  name: 'home',
   data () {
     return {
       tableData: [],
@@ -43,7 +42,8 @@ export default {
       try {
         const response = await axios.get('/api/characters')
         this.tableData = response.data
-      } finally {
+      } catch (e) {
+        console.log(e.message)
       }
     }
   },

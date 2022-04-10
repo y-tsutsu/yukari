@@ -16,7 +16,7 @@ export default {
   methods: {
     createPageTitle: function (to) {
       if (to.meta.title) {
-        var setTitle = 'Yukari | ' + to.meta.title
+        const setTitle = 'Yukari | ' + to.meta.title
         document.title = setTitle
       } else {
         document.title = 'Yukari'
@@ -24,7 +24,7 @@ export default {
     }
   },
   mounted: function () {
-    var to = this.$route
+    const to = this.$route
     this.createPageTitle(to)
   },
   watch: {
