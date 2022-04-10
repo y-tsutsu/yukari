@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+from mimetypes import add_type
 from os import path
 
 from flask import Flask
@@ -30,6 +31,7 @@ def create_app(name, front_root):
 def main():
     parser = create_arg_parser()
     args = parser.parse_args()
+    add_type('text/javascript', '.js')
     app = create_app(__name__, args.front_root)
     init_db(app)
     app.run(debug=True, host='0.0.0.0', port=80)
