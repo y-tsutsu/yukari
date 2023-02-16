@@ -18,8 +18,7 @@ class TestCharacter(TestCase):
         init_db(app)
 
     def tearDown(self):
-        db_filename = join(dirname(__file__), TestCharacter.TEST_DB_FILENAME)
-        remove(db_filename)
+        pass
 
     def test_character_01(self):
         expect = [

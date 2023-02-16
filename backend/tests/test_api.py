@@ -17,8 +17,7 @@ class TestApi(TestCase):
         self.__app = app.test_client()
 
     def tearDown(self):
-        db_filename = join(dirname(__file__), TestApi.TEST_DB_FILENAME)
-        remove(db_filename)
+        pass
 
     def test_api_route(self):
         res = self.__app.get('/api/characters')
