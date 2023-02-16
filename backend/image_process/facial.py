@@ -58,7 +58,7 @@ class DelayFacialRecognition(BaseImageProcess):
         self.__dummy_row = [(i, 0, 0, 0, 0) for i in range(1, 4)]
         self.__prepare_queue = Queue()
         self.__prepare_thread = Thread(target=self.__prepare_worker, args=(self.__prepare_queue,))
-        self.__prepare_thread.setDaemon(True)
+        self.__prepare_thread.daemon = True
         self.__prepare_thread.start()
         self.__prepare_rows = []
         self.__image = None
