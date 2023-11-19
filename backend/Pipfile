@@ -15,7 +15,7 @@ flask-sqlalchemy = "*"
 opencv-python = "*"
 
 [requires]
-python_version = "3.11"
+python_version = "3.12"
 
 [scripts]
 start = "python yukari.py '../frontend/dist/'"
