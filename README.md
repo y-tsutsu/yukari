@@ -16,8 +16,8 @@ Vue.js + Element を使ったフロントエンドの環境構築
 
 ### Requirements
 
-* Node.js (20.9)
-* npm (9.5)
+* Node.js (22.12)
+* npm (10.8)
 
 ### Install
 
@@ -45,9 +45,9 @@ OpenCVを使った画像認識の環境構築
 
 ### Requirements
 
-* Python (3.12)
-* pip (23.3)
-* pipenv (2023.11.15)
+* Python (3.13)
+* pip (24.3)
+* pipenv (2024.4.0)
 
 ### Install
 
